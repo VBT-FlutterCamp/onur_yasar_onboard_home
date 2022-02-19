@@ -1,16 +1,2 @@
-# flutter_onboard_homeview
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Ekran Alıntısı1](https://user-images.githubusercontent.com/63808974/154820213-9cdba7d8-ef15-417f-86f0-9b1e188c203b.PNG)
+![Ekran Alıntısı](https://user-images.githubusercontent.com/63808974/154820197-f3fc756d-a2ee-4d0d-a451-7cb22662d8f1.PNG)
