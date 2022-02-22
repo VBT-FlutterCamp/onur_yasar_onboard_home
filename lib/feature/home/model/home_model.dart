@@ -1,54 +1,43 @@
-class HomeModel {
-  String name;
-  String url;
-  HomeModel({
-    required this.name,
-    required this.url,
-  });
-}
+// To parse this JSON data, do
+//
+//     final homeModel = homeModelFromJson(jsonString);
 
-List<HomeModel> models = [
-  HomeModel(
-      name: "Coding Journey",
-      url: "https://www.youtube.com/watch?v=jctZxA5PB4s&t=175s"),
-  HomeModel(
-    name: "Smashing Magazine",
-    url: "https://www.uplabs.com/posts/tool/xd",
-  ),
-  HomeModel(
-    name: "UX Labs",
-    url: "https://undraw.co/search",
-  ),
-  HomeModel(
-    name: "The Netlify Blog",
-    url: "https://drawio-app.com/",
-  ),
-  HomeModel(
-    name: "Student Life",
-    url: "https://www.youtube.com/watch?v=jctZxA5PB4s&t=175s",
-  ),
-  HomeModel(
-    name: "Hello.io",
-    url: "https://www.uplabs.com/posts/tool/xd",
-  ),
-  HomeModel(
-    name: "The Netlify Blog",
-    url: "https://www.youtube.com/watch?v=jctZxA5PB4s&t=175s",
-  ),
-  HomeModel(
-    name: "UX Labs",
-    url: "https://undraw.co/search",
-  ),
-  HomeModel(
-    name: "Smashing Magazine",
-    url: "https://www.youtube.com/watch?v=jctZxA5PB4s&t=175s",
-  ),
-  HomeModel(
-    name: "Student Life",
-    url: "https://drawio-app.com/",
-  ),
-  HomeModel(
-    name: "Coding Journey",
-    url: "https://www.youtube.com/watch?v=jctZxA5PB4s&t=175s",
-  ),
-];
+import 'dart:convert';
+
+List<HomeModel> homeModelFromJson(String str) =>
+    List<HomeModel>.from(json.decode(str).map((x) => HomeModel.fromJson(x)));
+
+String homeModelToJson(List<HomeModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class HomeModel {
+  HomeModel({
+    this.postId,
+    this.id,
+    this.name,
+    this.email,
+    this.body,
+  });
+
+  int? postId;
+  int? id;
+  String? name;
+  String? email;
+  String? body;
+
+  factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
+        postId: json["postId"],
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        body: json["body"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "postId": postId,
+        "id": id,
+        "name": name,
+        "email": email,
+        "body": body,
+      };
+}

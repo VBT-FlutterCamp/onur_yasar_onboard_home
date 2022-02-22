@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard_homeview/feature/home/model/home_model.dart';
+import 'package:flutter_onboard_homeview/feature/home/service/home_service.dart';
 import 'package:flutter_onboard_homeview/product/companent/app_color_constant.dart';
 import 'package:flutter_onboard_homeview/product/companent/app_container_constant.dart';
 import 'package:flutter_onboard_homeview/product/companent/app_icon_constant.dart';
@@ -15,9 +16,32 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final HomeService _homeService = HomeService();
+  List<HomeModel>? _homeModel;
+  bool _isLoading = false;
+
+  void changeLoading() {
+    setState(() {
+      _isLoading = !_isLoading;
+    });
+  }
+
+  Future<void> getInit() async {
+    _homeModel = await _homeService.getHome();
+    changeLoading();
+  }
+
+  @override
+  void initState() {
+    getInit();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Scaffold(
         body: Padding(
           padding: context.paddingNormal,
@@ -66,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
 
   Text _subscripText() {
     return Text(
-      AppString().subText + ("(${models.length})"),
+      AppString().subText + ("(${_homeModel?.length})"),
       style: StyleText().subTextStyle,
     );
   }
@@ -88,14 +112,16 @@ class _HomeViewState extends State<HomeView> {
   }
 
   _buildListview() {
-    return ListView.builder(
-        itemCount: models.length,
-        itemBuilder: (context, index) {
-          return _cardViewListTile(context, index);
-        });
+    return _isLoading
+        ? ListView.builder(
+            itemCount: _homeModel?.length,
+            itemBuilder: (context, index) {
+              return _cardViewListTile(context, index);
+            })
+        : const Center(child: CircularProgressIndicator());
   }
 
-  Card _cardViewListTile(BuildContext context, int index) {
+  Widget _cardViewListTile(BuildContext context, int index) {
     return Card(
       borderOnForeground: true,
       elevation: 10,
@@ -104,14 +130,14 @@ class _HomeViewState extends State<HomeView> {
       ),
       child: ListTile(
         title: Text(
-          models[index].name,
+          _homeModel?[index].name ?? "",
           style: StyleText().listTileTitle,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              models[index].url,
+              _homeModel?[index].email ?? "",
               style: StyleText().listTileSubtitle,
             ),
             Divider(
